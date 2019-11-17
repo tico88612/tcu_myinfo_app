@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 
-// import 'package:transparent_image/transparent_image.dart';
-
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -58,6 +56,22 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Icon(TCUMyinfoIcon.pencil),
+            title: Text('外宿申請'),
+            onTap: () {
+              // Do Something
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(TCUMyinfoIcon.calendar_check_o),
+            title: Text('外宿預約申請'),
+            onTap: () {
+              // Do Something
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
             leading: Icon(TCUMyinfoIcon.logout),
             title: Text('登出'),
             onTap: () {
@@ -66,16 +80,16 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(TCUMyinfoIcon.pencil),
-            title: Text('申請外宿'),
+            leading: Icon(TCUMyinfoIcon.cog),
+            title: Text('設定'),
             onTap: () {
               // Do Something
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: Icon(TCUMyinfoIcon.cog),
-            title: Text('設定'),
+            leading: Icon(TCUMyinfoIcon.facebook_squared),
+            title: Text('FaceBook 專頁'),
             onTap: () {
               // Do Something
               Navigator.pop(context);

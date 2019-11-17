@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:tcu_myinfo_app/views/AppDrawer.dart';
+import 'package:tcu_myinfo_app/views/EULADialog.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -54,34 +53,12 @@ class MainPageState extends State<MainPageWidget> {
     );
   }
 
-  void _dismissDialog() {
-    Navigator.pop(context);
-  }
-
   void _showMaterialDialog() {
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text('終端使用者協議 EULA'),
-          content: Text('您必須同意終端使用者協議才能使用此 App'),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () {
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                // exit(0);
-              },
-              child: Text('不同意'),
-            ),
-            FlatButton(
-              onPressed: () {
-                _dismissDialog();
-              },
-              child: Text('同意'),
-            ),
-          ],
-        );
+        return EULADialog();
       },
     );
   }
@@ -95,7 +72,9 @@ class MainPageState extends State<MainPageWidget> {
         centerTitle: false,
       ),
       drawer: AppDrawer(),
-      body: _pageList[_tabIndex],
+      body: Center(
+        child: _pageList[_tabIndex],
+      ),
       bottomNavigationBar: new BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           new BottomNavigationBarItem(
