@@ -4,6 +4,22 @@ import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return AppDrawerWidget();
+  }
+}
+
+class AppDrawerWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return AppDrawerState();
+  }
+}
+
+class AppDrawerState extends State<AppDrawerWidget> {
+  bool haslogin = false;
+
+  @override
+  Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -47,13 +63,34 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
           ),
-          ListTile(
-            leading: Icon(TCUMyinfoIcon.login),
-            title: Text('登入'),
-            onTap: () {
-              // Do Something
-              Navigator.pop(context);
-            },
+          Visibility(
+            child: ListTile(
+              leading: Icon(TCUMyinfoIcon.login),
+              title: Text('登入'),
+              onTap: () {
+                // Do Something
+                Navigator.pop(context);
+                setState(
+                      () {
+                    haslogin = false;
+                  },
+                );
+              },
+            ),
+            replacement: ListTile(
+              leading: Icon(TCUMyinfoIcon.logout),
+              title: Text('登出'),
+              onTap: () {
+                // Do Something
+                Navigator.pop(context);
+                setState(
+                  () {
+                    haslogin = true;
+                  },
+                );
+              },
+            ),
+            visible: haslogin,
           ),
           ListTile(
             leading: Icon(TCUMyinfoIcon.pencil),
@@ -66,14 +103,6 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(TCUMyinfoIcon.calendar_check_o),
             title: Text('外宿預約申請'),
-            onTap: () {
-              // Do Something
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: Icon(TCUMyinfoIcon.logout),
-            title: Text('登出'),
             onTap: () {
               // Do Something
               Navigator.pop(context);

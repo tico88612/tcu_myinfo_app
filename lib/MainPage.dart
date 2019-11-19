@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 
 import 'package:tcu_myinfo_app/views/AppDrawer.dart';
 import 'package:tcu_myinfo_app/views/EULADialog.dart';
@@ -6,14 +7,14 @@ import 'package:tcu_myinfo_app/views/EULADialog.dart';
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MainPageWidget();
+    return MainPageWidget();
   }
 }
 
 class MainPageWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new MainPageState();
+    return MainPageState();
   }
 }
 
@@ -78,19 +79,19 @@ class MainPageState extends State<MainPageWidget> {
       bottomNavigationBar: new BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           new BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(TCUMyinfoIcon.home),
             title: getTabTitle(0),
           ),
           new BottomNavigationBarItem(
-            icon: Icon(Icons.message),
+            icon: Icon(TCUMyinfoIcon.bank),
             title: getTabTitle(1),
           ),
           new BottomNavigationBarItem(
-            icon: Icon(Icons.today),
+            icon: Icon(TCUMyinfoIcon.calendar),
             title: getTabTitle(2),
           ),
           new BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(TCUMyinfoIcon.cog),
             title: getTabTitle(3),
           ),
         ],

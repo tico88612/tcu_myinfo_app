@@ -16,6 +16,10 @@
 ///         Author:    Dave Gandy
 ///         License:   SIL ()
 ///         Homepage:  http://fortawesome.github.com/Font-Awesome/
+/// * Material Design Icons, Copyright (C) Google, Inc
+///         Author:    Google
+///         License:   Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+///         Homepage:  https://design.google.com/icons/
 ///
 import 'package:flutter/widgets.dart';
 
@@ -39,9 +43,16 @@ class TCUMyinfoIcon {
   static const IconData location = const IconData(0xe80c, fontFamily: _kFontFam);
   static const IconData tags = const IconData(0xe80d, fontFamily: _kFontFam);
   static const IconData tag = const IconData(0xe80e, fontFamily: _kFontFam);
+  static const IconData link = const IconData(0xe80f, fontFamily: _kFontFam);
+  static const IconData attach_file = const IconData(0xe810, fontFamily: _kFontFam);
   static const IconData table = const IconData(0xf0ce, fontFamily: _kFontFam);
+  static const IconData doc_text = const IconData(0xf0f6, fontFamily: _kFontFam);
+  static const IconData building = const IconData(0xf0f7, fontFamily: _kFontFam);
   static const IconData direction = const IconData(0xf124, fontFamily: _kFontFam);
+  static const IconData doc_inv = const IconData(0xf15b, fontFamily: _kFontFam);
+  static const IconData doc_text_inv = const IconData(0xf15c, fontFamily: _kFontFam);
   static const IconData bank = const IconData(0xf19c, fontFamily: _kFontFam);
+  static const IconData building_filled = const IconData(0xf1ad, fontFamily: _kFontFam);
   static const IconData sliders = const IconData(0xf1de, fontFamily: _kFontFam);
   static const IconData newspaper = const IconData(0xf1ea, fontFamily: _kFontFam);
   static const IconData calendar_plus_o = const IconData(0xf271, fontFamily: _kFontFam);
