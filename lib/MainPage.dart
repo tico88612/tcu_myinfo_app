@@ -3,6 +3,7 @@ import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 
 import 'package:tcu_myinfo_app/views/AppDrawer.dart';
 import 'package:tcu_myinfo_app/views/EULADialog.dart';
+import 'package:tcu_myinfo_app/views/StuAnnounce.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -22,6 +23,7 @@ class MainPageState extends State<MainPageWidget> {
   int _tabIndex = 0;
   var appBarTitles = ['首頁', '校園活動', '學期課表', '設定'];
   var _pageList;
+  final ScrollController _homeController = ScrollController();
 
   Text getTabTitle(int curIndex) {
     if (curIndex == _tabIndex) {
@@ -37,7 +39,7 @@ class MainPageState extends State<MainPageWidget> {
 
   void initData() {
     _pageList = [
-      new Text("首頁"),
+      new StuAnnounceWidget(homeController: _homeController),
       new Text("校園活動"),
       new Text("學期課表"),
       new Text("設定"),
@@ -100,14 +102,22 @@ class MainPageState extends State<MainPageWidget> {
         currentIndex: _tabIndex,
         iconSize: 24.0,
         //點選事件
-        onTap: (index) {
-          setState(
-            () {
-              _tabIndex = index;
-            },
-          );
-        },
+        onTap: _selectedTab,
       ),
     );
+  }
+
+  void _selectedTab(int index) {
+    if (_tabIndex == index) {
+      _homeController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    } else {
+      setState(() {
+        _tabIndex = index;
+      });
+    }
   }
 }
