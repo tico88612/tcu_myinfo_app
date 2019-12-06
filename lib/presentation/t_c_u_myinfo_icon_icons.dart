@@ -45,9 +45,16 @@ class TCUMyinfoIcon {
   static const IconData tag = const IconData(0xe80e, fontFamily: _kFontFam);
   static const IconData link = const IconData(0xe80f, fontFamily: _kFontFam);
   static const IconData attach_file = const IconData(0xe810, fontFamily: _kFontFam);
+  static const IconData heart = const IconData(0xe811, fontFamily: _kFontFam);
+  static const IconData heart_empty = const IconData(0xe812, fontFamily: _kFontFam);
+  static const IconData star = const IconData(0xe813, fontFamily: _kFontFam);
+  static const IconData star_empty = const IconData(0xe814, fontFamily: _kFontFam);
+  static const IconData star_half = const IconData(0xe815, fontFamily: _kFontFam);
+  static const IconData font = const IconData(0xe816, fontFamily: _kFontFam);
   static const IconData table = const IconData(0xf0ce, fontFamily: _kFontFam);
   static const IconData doc_text = const IconData(0xf0f6, fontFamily: _kFontFam);
   static const IconData building = const IconData(0xf0f7, fontFamily: _kFontFam);
+  static const IconData star_half_alt = const IconData(0xf123, fontFamily: _kFontFam);
   static const IconData direction = const IconData(0xf124, fontFamily: _kFontFam);
   static const IconData doc_inv = const IconData(0xf15b, fontFamily: _kFontFam);
   static const IconData doc_text_inv = const IconData(0xf15c, fontFamily: _kFontFam);
