@@ -70,7 +70,7 @@ class AnnDetailState extends State<AnnDetail> {
                           TextStyle(
                             height: 1.5,
                             fontSize: 18,
-                            color: Color.fromARGB(255, 100, 100, 100),
+                            color: Color.fromARGB(255, 100, 100, 100), // TODO: Darker mode Text Color
                           ),
                         );
                     }
