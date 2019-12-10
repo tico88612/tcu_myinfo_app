@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 
-class AppDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AppDrawerWidget();
-  }
-}
+class AppDrawer extends StatefulWidget {
+  AppDrawer({Key key, this.context, this.hasLogin}) : super(key: key);
 
-class AppDrawerWidget extends StatefulWidget {
+  final BuildContext context;
+  final bool hasLogin;
+
   @override
   State<StatefulWidget> createState() {
     return AppDrawerState();
   }
 }
 
-class AppDrawerState extends State<AppDrawerWidget> {
-  bool haslogin = false;
-
+class AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -70,11 +66,6 @@ class AppDrawerState extends State<AppDrawerWidget> {
               onTap: () {
                 // Do Something
                 Navigator.pop(context);
-                setState(
-                      () {
-                    haslogin = false;
-                  },
-                );
               },
             ),
             replacement: ListTile(
@@ -83,14 +74,9 @@ class AppDrawerState extends State<AppDrawerWidget> {
               onTap: () {
                 // Do Something
                 Navigator.pop(context);
-                setState(
-                  () {
-                    haslogin = true;
-                  },
-                );
               },
             ),
-            visible: haslogin,
+            visible: widget.hasLogin,
           ),
           ListTile(
             leading: Icon(TCUMyinfoIcon.pencil),
@@ -128,12 +114,35 @@ class AppDrawerState extends State<AppDrawerWidget> {
             leading: Icon(TCUMyinfoIcon.info_circled),
             title: Text('關於我們'),
             onTap: () {
-              // Do Something
               Navigator.pop(context);
+              alertDialog(widget.context); // give MainPage context
             },
           ),
         ],
       ),
     );
+  }
+
+  void alertDialog(BuildContext context) {
+    var alert = AlertDialog(
+      title: Text('Rewind and remember'),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            Text('You will never be satisfied.'),
+            Text('You\’re like me. I’m never satisfied.'),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Regret'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+    showDialog(context: context, builder: (BuildContext context) => alert);
   }
 }

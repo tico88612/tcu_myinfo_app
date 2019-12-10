@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 
+import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 import 'package:tcu_myinfo_app/views/AppDrawer.dart';
 import 'package:tcu_myinfo_app/views/EULADialog.dart';
 import 'package:tcu_myinfo_app/views/StuAnnounce.dart';
@@ -21,8 +21,9 @@ class MainPageWidget extends StatefulWidget {
 
 class MainPageState extends State<MainPageWidget> {
   int _tabIndex = 0;
-  var appBarTitles = ['首頁', '校園活動', '學期課表', '設定'];
+  var appBarTitles = ['首頁', '學校公告', '學期課表', '設定'];
   var _pageList;
+  var hasLogin = false;
   final ScrollController _homeController = ScrollController();
 
   Text getTabTitle(int curIndex) {
@@ -39,8 +40,8 @@ class MainPageState extends State<MainPageWidget> {
 
   void initData() {
     _pageList = [
+      new Text("首頁"),
       new StuAnnounceWidget(homeController: _homeController),
-      new Text("校園活動"),
       new Text("學期課表"),
       new Text("設定"),
     ];
@@ -74,7 +75,10 @@ class MainPageState extends State<MainPageWidget> {
         title: Text("慈大查詢系統"),
         centerTitle: false,
       ),
-      drawer: AppDrawer(),
+      drawer: AppDrawer(
+        context: context,
+        hasLogin: hasLogin,
+      ),
       body: Center(
         child: _pageList[_tabIndex],
       ),
@@ -85,7 +89,7 @@ class MainPageState extends State<MainPageWidget> {
             title: getTabTitle(0),
           ),
           new BottomNavigationBarItem(
-            icon: Icon(TCUMyinfoIcon.bank),
+            icon: Icon(TCUMyinfoIcon.megaphone),
             title: getTabTitle(1),
           ),
           new BottomNavigationBarItem(
@@ -109,11 +113,13 @@ class MainPageState extends State<MainPageWidget> {
 
   void _selectedTab(int index) {
     if (_tabIndex == index) {
-      _homeController.animateTo(
-        0.0,
-        curve: Curves.easeOut,
-        duration: const Duration(milliseconds: 300),
-      );
+      if (_homeController.hasClients) {
+        _homeController.animateTo(
+          0.0,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300),
+        );
+      }
     } else {
       setState(() {
         _tabIndex = index;
