@@ -1,16 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
+import 'package:http/http.dart' as http;
 
-//class StuAnnounce extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return StuAnnounceWidget();
-//  }
-//}
+import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
+import 'package:tcu_myinfo_app/views/AnnDetail.dart';
 
 class StuAnnounceWidget extends StatefulWidget {
   StuAnnounceWidget({Key key, this.homeController}) : super(key: key);
@@ -24,6 +19,7 @@ class StuAnnounceWidget extends StatefulWidget {
 }
 
 class StuAnnounceState extends State<StuAnnounceWidget> {
+  var _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List widgets = [];
 
   @override
@@ -36,21 +32,25 @@ class StuAnnounceState extends State<StuAnnounceWidget> {
     return widgets.length == 0;
   }
 
-  getBody() {
+  getBody(BuildContext context) {
     if (showLoadingDialog()) {
       return getProgressDialog();
     } else {
-      return getScaffold();
+      return getScaffold(context);
     }
   }
 
   getProgressDialog() {
-    return new Center(child: new CircularProgressIndicator());
+    return Center(child: new CircularProgressIndicator());
   }
 
-  Scaffold getScaffold() {
+  Scaffold getScaffold(BuildContext context) {
     return Scaffold(
-      body: getListView(),
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        child: getListView(context),
+        onRefresh: loadData,
+      ),
       floatingActionButton: SpeedDial(
         // both default to 16
         marginRight: 18,
@@ -94,25 +94,28 @@ class StuAnnounceState extends State<StuAnnounceWidget> {
     );
   }
 
-  ListView getListView() => new ListView.separated(
-        controller: widget.homeController,
-        itemCount: widgets.length,
-        itemBuilder: (BuildContext context, int position) {
-          return getRow(position);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Divider(
-            color: Colors.grey,
-            height: 0.0,
-          );
-        },
-      );
-  @override
-  Widget build(BuildContext context) {
-    return getBody();
+  ListView getListView(BuildContext context) {
+    return ListView.separated(
+      controller: widget.homeController,
+      itemCount: widgets.length,
+      itemBuilder: (BuildContext context, int position) {
+        return getRow(context, position);
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider(
+          color: Colors.grey,
+          height: 0.0,
+        );
+      },
+    );
   }
 
-  Widget getRow(int i) {
+  @override
+  Widget build(BuildContext context) {
+    return getBody(context);
+  }
+
+  Widget getRow(BuildContext context, int i) {
     return ListTile(
       title: Text(
         "${widgets[i]["Title"]}",
@@ -124,22 +127,24 @@ class StuAnnounceState extends State<StuAnnounceWidget> {
         softWrap: true,
         overflow: TextOverflow.ellipsis,
       ),
-      onTap: () => Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            widgets[i]["Dept"],
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AnnDetail(
+            annId: widgets[i]["NewsID"],
           ),
-          duration: Duration(seconds: 1),
         ),
       ),
     );
   }
 
-  loadData() async {
+  Future<Null> loadData() async {
+    _refreshIndicatorKey.currentState?.show(atTop: false);
     String dataURL = "https://tcumyinfo.tw/api/ann.php?category=0";
     http.Response response = await http.get(dataURL);
     setState(() {
       widgets = json.decode(response.body);
     });
+    return null;
   }
 }
