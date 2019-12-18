@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info/package_info.dart';
 
 class AppDrawer extends StatefulWidget {
   AppDrawer({Key key, this.context, this.hasLogin}) : super(key: key);
@@ -108,6 +110,7 @@ class AppDrawerState extends State<AppDrawer> {
             onTap: () {
               // Do Something
               Navigator.pop(context);
+              _launchURL();
             },
           ),
           ListTile(
@@ -123,20 +126,45 @@ class AppDrawerState extends State<AppDrawer> {
     );
   }
 
+  _launchURL() async {
+    const url = 'https://www.facebook.com/tcumyinfo.tw/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Future<String> getVersionNumber() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.version + "+" + packageInfo.buildNumber;
+  }
+
   void alertDialog(BuildContext context) {
     var alert = AlertDialog(
-      title: Text('Rewind and remember'),
+      title: Text('慈大查詢系統'),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text('You will never be satisfied.'),
-            Text('You\’re like me. I’m never satisfied.'),
+            ListTile(
+              title: Text('版本號'),
+              trailing: FutureBuilder(
+                future: getVersionNumber(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  return Text(
+                    snapshot.hasData ? snapshot.data : "Loading ...",
+                    style: TextStyle(color: Colors.black54),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('Regret'),
+          child: Text('確定'),
           onPressed: () {
             Navigator.pop(context);
           },
