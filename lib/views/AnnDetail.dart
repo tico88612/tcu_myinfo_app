@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 
 class AnnDetail extends StatefulWidget {
   AnnDetail({Key key, this.annId}) : super(key: key);
@@ -18,6 +20,7 @@ class AnnDetail extends StatefulWidget {
 
 class AnnDetailState extends State<AnnDetail> {
   Map<String, dynamic> annDetails;
+  List<Map<String, dynamic>> attachment;
 
   @override
   void initState() {
@@ -25,19 +28,30 @@ class AnnDetailState extends State<AnnDetail> {
     loadData();
   }
 
-  showLoadingDialog() {
-    return annDetails?.isEmpty;
+  @override
+  Widget build(BuildContext context) {
+    return _getBody(context);
   }
 
-  getBody(BuildContext context) {
+  Widget _getBody(BuildContext context) {
     if (annDetails == null) {
-      return getProgressDialog();
+      return _getProgressDialog();
     } else {
-      return getScaffold(context);
+      return _getScaffold(context);
     }
   }
 
-  Scaffold getScaffold(BuildContext context) {
+  Scaffold _getProgressDialog() {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("載入中..."),
+        centerTitle: true,
+      ),
+      body: Center(child: new CircularProgressIndicator()),
+    );
+  }
+
+  Scaffold _getScaffold(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -49,55 +63,107 @@ class AnnDetailState extends State<AnnDetail> {
         child: Container(
           padding: EdgeInsets.all(30.0),
           child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                child: Text(
-                  annDetails["Title"],
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Html(
-                data: annDetails["Context"],
-                customTextStyle: (dom.Node node, TextStyle baseStyle) {
-                  if (node is dom.Element) {
-                    switch (node.localName) {
-                      default:
-                        return baseStyle.merge(
-                          TextStyle(
-                            height: 1.5,
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 100, 100, 100), // TODO: Darker mode Text Color
-                          ),
-                        );
-                    }
-                  }
-                  return baseStyle;
-                },
-              ),
-            ],
+            children: _getContext(),
           ),
         ),
       ),
     );
   }
 
-  getProgressDialog() {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("載入中..."),
-        centerTitle: true,
+  List<Widget> _getContext() {
+    return <Widget>[
+      Padding(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+        child: Text(
+          annDetails["Title"],
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: Center(child: new CircularProgressIndicator()),
+      Html(
+        data: annDetails["Context"],
+        customTextStyle: (dom.Node node, TextStyle baseStyle) {
+          if (node is dom.Element) {
+            switch (node.localName) {
+              default:
+                return baseStyle.merge(
+                  TextStyle(
+                    height: 1.5,
+                    fontSize: 18,
+                    color: Color.fromARGB(
+                        255, 100, 100, 100), // TODO: Darker mode Text Color
+                  ),
+                );
+            }
+          }
+          return baseStyle;
+        },
+      ),
+      _getAttachments(),
+    ];
+  }
+
+  ListView _getAttachments() {
+    attachment = List<Map<String, dynamic>>.from(annDetails["Attachments"]);
+    return ListView.builder(
+      itemCount: attachment.length,
+      itemBuilder: (BuildContext context, int position) {
+        return _getEachAttachment(context, position);
+      },
+      shrinkWrap: true,
+      primary: false,
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return getBody(context);
+  Widget _getEachAttachment(BuildContext context, int i) {
+    return ListTile(
+      leading: _getEachAttachmentIcon(attachment[i]["FileLink"]),
+      title: Text(
+        "${attachment[i]["FileName"]}",
+        softWrap: true,
+        overflow: TextOverflow.ellipsis,
+      ),
+      onTap: () {
+        _launchURL(attachment[i]["FileLink"]);
+      },
+    );
+  }
+
+  Icon _getEachAttachmentIcon(String extension) {
+    final alphanumeric =
+        RegExp(r'\.([0-9a-z]+)(?:[\?#]|$)', caseSensitive: true);
+    final match = alphanumeric.firstMatch(extension);
+    extension = match.group(1);
+    switch (extension) {
+      case "pdf":
+        return Icon(TCUMyinfoIcon.file_pdf);
+      case "jpg":
+      case "gif":
+      case "png":
+        return Icon(TCUMyinfoIcon.picture);
+      case "doc":
+      case "docx":
+        return Icon(TCUMyinfoIcon.file_word);
+      case "xls":
+      case "xlsx":
+        return Icon(TCUMyinfoIcon.file_excel);
+      case "ppt":
+      case "pptx":
+        return Icon(TCUMyinfoIcon.file_powerpoint);
+      default:
+        return Icon(TCUMyinfoIcon.doc_text);
+    }
+  }
+
+  _launchURL(String url) async {
+    url = Uri.encodeFull(url);
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   loadData() async {
