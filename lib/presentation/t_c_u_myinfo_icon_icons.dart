@@ -51,6 +51,8 @@ class TCUMyinfoIcon {
   static const IconData star_empty = const IconData(0xe814, fontFamily: _kFontFam);
   static const IconData star_half = const IconData(0xe815, fontFamily: _kFontFam);
   static const IconData font = const IconData(0xe816, fontFamily: _kFontFam);
+  static const IconData tcu_logo = const IconData(0xe817, fontFamily: _kFontFam);
+  static const IconData picture = const IconData(0xe818, fontFamily: _kFontFam);
   static const IconData table = const IconData(0xf0ce, fontFamily: _kFontFam);
   static const IconData doc_text = const IconData(0xf0f6, fontFamily: _kFontFam);
   static const IconData building = const IconData(0xf0f7, fontFamily: _kFontFam);
@@ -60,6 +62,12 @@ class TCUMyinfoIcon {
   static const IconData doc_text_inv = const IconData(0xf15c, fontFamily: _kFontFam);
   static const IconData bank = const IconData(0xf19c, fontFamily: _kFontFam);
   static const IconData building_filled = const IconData(0xf1ad, fontFamily: _kFontFam);
+  static const IconData file_pdf = const IconData(0xf1c1, fontFamily: _kFontFam);
+  static const IconData file_word = const IconData(0xf1c2, fontFamily: _kFontFam);
+  static const IconData file_excel = const IconData(0xf1c3, fontFamily: _kFontFam);
+  static const IconData file_powerpoint = const IconData(0xf1c4, fontFamily: _kFontFam);
+  static const IconData file_image = const IconData(0xf1c5, fontFamily: _kFontFam);
+  static const IconData file_archive = const IconData(0xf1c6, fontFamily: _kFontFam);
   static const IconData sliders = const IconData(0xf1de, fontFamily: _kFontFam);
   static const IconData newspaper = const IconData(0xf1ea, fontFamily: _kFontFam);
   static const IconData calendar_plus_o = const IconData(0xf271, fontFamily: _kFontFam);
