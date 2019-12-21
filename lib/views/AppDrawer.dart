@@ -43,7 +43,7 @@ class AppDrawerState extends State<AppDrawer> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 6.0),
                     child: Text(
-                      '106316119',
+                      '106316001',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -51,7 +51,7 @@ class AppDrawerState extends State<AppDrawer> {
                     ),
                   ),
                   Text(
-                    '醫學資訊學系 楊承昊',
+                    '醫學資訊學系 測試者',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
