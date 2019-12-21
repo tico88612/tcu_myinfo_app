@@ -21,6 +21,7 @@ class AnnDetail extends StatefulWidget {
 class AnnDetailState extends State<AnnDetail> {
   Map<String, dynamic> annDetails;
   List<Map<String, dynamic>> attachment;
+  List<Map<String, dynamic>> link;
 
   @override
   void initState() {
@@ -102,32 +103,52 @@ class AnnDetailState extends State<AnnDetail> {
         },
       ),
       _getAttachments(),
+      _getLinks(),
     ];
   }
 
-  ListView _getAttachments() {
+  Column _getAttachments() {
     attachment = List<Map<String, dynamic>>.from(annDetails["Attachments"]);
-    return ListView.builder(
-      itemCount: attachment.length,
-      itemBuilder: (BuildContext context, int position) {
-        return _getEachAttachment(context, position);
-      },
-      shrinkWrap: true,
-      primary: false,
+    if (attachment.length == 0) return Column();
+    return Column(
+      children: <Widget>[
+        ListTile(
+          leading: Icon(TCUMyinfoIcon.attach_file),
+          title: Text(
+            "附加檔案",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        ListView.builder(
+          itemCount: attachment.length,
+          itemBuilder: (BuildContext context, int position) {
+            return _getEachAttachment(context, position);
+          },
+          shrinkWrap: true,
+          primary: false,
+        )
+      ],
     );
   }
 
   Widget _getEachAttachment(BuildContext context, int i) {
-    return ListTile(
-      leading: _getEachAttachmentIcon(attachment[i]["FileLink"]),
-      title: Text(
-        "${attachment[i]["FileName"]}",
-        softWrap: true,
-        overflow: TextOverflow.ellipsis,
+    return ListTileTheme(
+      iconColor: Color.fromARGB(255, 38, 166, 154),
+      textColor: Color.fromARGB(255, 38, 166, 154),
+      child: ListTile(
+        leading: _getEachAttachmentIcon(attachment[i]["FileLink"]),
+        title: Text(
+          "${attachment[i]["FileName"]}",
+          softWrap: true,
+          overflow: TextOverflow.ellipsis,
+        ),
+        onTap: () {
+          _launchURL(attachment[i]["FileLink"]);
+        },
       ),
-      onTap: () {
-        _launchURL(attachment[i]["FileLink"]);
-      },
     );
   }
 
@@ -155,6 +176,50 @@ class AnnDetailState extends State<AnnDetail> {
       default:
         return Icon(TCUMyinfoIcon.doc_text);
     }
+  }
+
+  Column _getLinks() {
+    link = List<Map<String, dynamic>>.from(annDetails["Links"]);
+    if (link.length == 0) return Column();
+    return Column(
+      children: <Widget>[
+        ListTile(
+          leading: Icon(TCUMyinfoIcon.link),
+          title: Text(
+            "相關連結",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        ListView.builder(
+          itemCount: link.length,
+          itemBuilder: (BuildContext context, int position) {
+            return _getEachLink(context, position);
+          },
+          shrinkWrap: true,
+          primary: false,
+        )
+      ],
+    );
+  }
+
+  Widget _getEachLink(BuildContext context, int i) {
+    return ListTileTheme(
+      iconColor: Color.fromARGB(255, 38, 166, 154),
+      textColor: Color.fromARGB(255, 38, 166, 154),
+      child: ListTile(
+        title: Text(
+          "${link[i]["LinkName"]}",
+          softWrap: true,
+          overflow: TextOverflow.ellipsis,
+        ),
+        onTap: () {
+          _launchURL(link[i]["Hyperlink"]);
+        },
+      ),
+    );
   }
 
   _launchURL(String url) async {
