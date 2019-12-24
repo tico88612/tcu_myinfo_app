@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 import 'package:tcu_myinfo_app/views/AppDrawer.dart';
 import 'package:tcu_myinfo_app/views/EULADialog.dart';
@@ -15,11 +17,11 @@ class MainPage extends StatelessWidget {
 class MainPageWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MainPageState();
+    return _MainPageState();
   }
 }
 
-class MainPageState extends State<MainPageWidget> {
+class _MainPageState extends State<MainPageWidget> {
   int _tabIndex = 0;
   var appBarTitles = ['首頁', '學校公告', '學期課表', '設定'];
   var _pageList;
@@ -47,14 +49,22 @@ class MainPageState extends State<MainPageWidget> {
     ];
   }
 
+  Future<Null> _getSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isAgreed = (prefs.getBool('isAgreed') ?? false);
+    if (isAgreed == false) {
+      Future.delayed(
+        Duration.zero,
+        () {
+          _showMaterialDialog();
+        },
+      );
+    }
+  }
+
   void initState() {
     super.initState();
-    Future.delayed(
-      Duration.zero,
-      () {
-        _showMaterialDialog();
-      },
-    );
+    _getSharedPrefs();
   }
 
   void _showMaterialDialog() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EULADialog extends StatelessWidget {
   _launchURL() async {
@@ -31,6 +32,7 @@ class EULADialog extends StatelessWidget {
         ),
         FlatButton(
           onPressed: () {
+            _pressAgree();
             Navigator.pop(context);
           },
           child: Text(
@@ -40,5 +42,10 @@ class EULADialog extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  _pressAgree() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isAgreed', true);
   }
 }
