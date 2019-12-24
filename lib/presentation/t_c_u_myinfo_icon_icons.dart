@@ -53,6 +53,7 @@ class TCUMyinfoIcon {
   static const IconData font = const IconData(0xe816, fontFamily: _kFontFam);
   static const IconData tcu_logo = const IconData(0xe817, fontFamily: _kFontFam);
   static const IconData picture = const IconData(0xe818, fontFamily: _kFontFam);
+  static const IconData lock = const IconData(0xe819, fontFamily: _kFontFam);
   static const IconData table = const IconData(0xf0ce, fontFamily: _kFontFam);
   static const IconData doc_text = const IconData(0xf0f6, fontFamily: _kFontFam);
   static const IconData building = const IconData(0xf0f7, fontFamily: _kFontFam);

@@ -3,6 +3,8 @@ import 'package:tcu_myinfo_app/presentation/t_c_u_myinfo_icon_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
 
+import 'package:tcu_myinfo_app/views/StuLoginPage.dart';
+
 class AppDrawer extends StatefulWidget {
   AppDrawer({Key key, this.context, this.hasLogin}) : super(key: key);
 
@@ -11,11 +13,11 @@ class AppDrawer extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return AppDrawerState();
+    return _AppDrawerState();
   }
 }
 
-class AppDrawerState extends State<AppDrawer> {
+class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -63,19 +65,21 @@ class AppDrawerState extends State<AppDrawer> {
           ),
           Visibility(
             child: ListTile(
-              leading: Icon(TCUMyinfoIcon.login),
-              title: Text('登入'),
+              leading: Icon(TCUMyinfoIcon.logout),
+              title: Text('登出'),
               onTap: () {
                 // Do Something
                 Navigator.pop(context);
               },
             ),
             replacement: ListTile(
-              leading: Icon(TCUMyinfoIcon.logout),
-              title: Text('登出'),
+              leading: Icon(TCUMyinfoIcon.login),
+              title: Text('登入'),
               onTap: () {
                 // Do Something
                 Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => StuLoginPage()));
               },
             ),
             visible: widget.hasLogin,
