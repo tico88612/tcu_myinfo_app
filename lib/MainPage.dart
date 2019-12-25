@@ -50,8 +50,9 @@ class _MainPageState extends State<MainPageWidget> {
   }
 
   Future<Null> _getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isAgreed = (prefs.getBool('isAgreed') ?? false);
+//    SharedPreferences prefs = await SharedPreferences.getInstance(); // TODO: Bug
+//    bool isAgreed = (prefs.getBool('isAgreed') ?? false);
+    bool isAgreed = false;
     if (isAgreed == false) {
       Future.delayed(
         Duration.zero,
@@ -62,6 +63,7 @@ class _MainPageState extends State<MainPageWidget> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     _getSharedPrefs();
