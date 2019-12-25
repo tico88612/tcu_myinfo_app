@@ -78,8 +78,12 @@ class _AppDrawerState extends State<AppDrawer> {
               onTap: () {
                 // Do Something
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => StuLoginPage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StuLoginPage(),
+                  ),
+                );
               },
             ),
             visible: widget.hasLogin,
