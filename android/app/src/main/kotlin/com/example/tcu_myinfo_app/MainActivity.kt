@@ -1,4 +1,4 @@
-package com.example.tcu_myinfo_app
+package tw.yangjerry.tcu_myinfo_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
