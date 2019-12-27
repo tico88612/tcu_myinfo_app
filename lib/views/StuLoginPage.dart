@@ -136,10 +136,11 @@ class _StuLoginPageState extends State<StuLoginPage> {
                                 child: Text(
                                   "SIGNIN",
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "Poppins-Bold",
-                                      fontSize: 18,
-                                      letterSpacing: 1.0),
+                                    color: Colors.white,
+                                    fontFamily: "Poppins-Bold",
+                                    fontSize: 18,
+                                    letterSpacing: 1.0,
+                                  ),
                                 ),
                               ),
                             ),
