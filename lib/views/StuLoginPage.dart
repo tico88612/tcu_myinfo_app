@@ -57,10 +57,6 @@ class _StuLoginPageState extends State<StuLoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-//                  Image(
-//                    image: AssetImage("assets/images/logo.png"),
-//                    width: MediaQuery.of(context).size.width * 0.5,
-//                  ),
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: '學號 Student ID',
@@ -107,9 +103,13 @@ class _StuLoginPageState extends State<StuLoginPage> {
                           SizedBox(
                             width: 8.0,
                           ),
-                          Text("Remember me",
-                              style: TextStyle(
-                                  fontSize: 12, fontFamily: "Poppins-Medium"))
+                          Text(
+                            "Remember me",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: "Poppins-Medium",
+                            ),
+                          )
                         ],
                       ),
                       InkWell(
@@ -117,17 +117,21 @@ class _StuLoginPageState extends State<StuLoginPage> {
                           width: ScreenUtil.getInstance().setWidth(330),
                           height: ScreenUtil.getInstance().setHeight(100),
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
+                            gradient: LinearGradient(
+                              colors: [
                                 Color(0xFF17ead9),
-                                Color(0xFF6078ea)
-                              ]),
-                              borderRadius: BorderRadius.circular(6.0),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xFF6078ea).withOpacity(.3),
-                                    offset: Offset(0.0, 8.0),
-                                    blurRadius: 8.0)
-                              ]),
+                                Color(0xFF6078ea),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(6.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xFF6078ea).withOpacity(.3),
+                                offset: Offset(0.0, 8.0),
+                                blurRadius: 8.0,
+                              )
+                            ],
+                          ),
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
